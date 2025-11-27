@@ -24,7 +24,7 @@ for (const data of testData) {
         await cart.verifyProductInCart(data.productName);
         await cart.checkout();
 
-        await checkout.selectCountry("India");
+        await checkout.selectCountry(data.country);
         await checkout.placeOrder();
 
         const orderId = (await checkout.getOrderId())!.trim();

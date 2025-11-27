@@ -1,11 +1,11 @@
 // pages/DashboardPage.ts
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
 
 export class DashboardPage {
 
-    private products;
-    private cartIcon;
-    private myOrdersBtn;
+    private products:Locator;
+    private cartIcon:Locator;
+    private myOrdersBtn:Locator;
 
     constructor(private page: Page) {
         this.products = this.page.locator(".card-body");
@@ -14,6 +14,7 @@ export class DashboardPage {
     }
 
     async addProductToCart(productName: string) {
+        await this.products.first().waitFor();
         const count = await this.products.count();
 
         for (let i = 0; i < count; i++) {
