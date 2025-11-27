@@ -3,6 +3,8 @@ import { test, expect } from "@playwright/test";
 import testData from "../data/testData.json";
 import { PageObjectManager } from "../pages/PageObjectManager";
 
+test.describe.configure({mode:'serial'});
+
 for (const data of testData) {
     test(`Place order for ${data.productName}`, async ({ page }) => {
 
@@ -36,5 +38,24 @@ for (const data of testData) {
 
         const orderIdDetails = await orderDetails.getOrderIdFromDetails();
         expect(orderId.includes(orderIdDetails!)).toBeTruthy();
+    });
+}
+
+for (const data of testData) {
+
+test(`Delete orders for ${data.email}`, async ({ page }) => {
+
+        const pom = new PageObjectManager(page);
+
+        const login = pom.getLoginPage();
+        const dashboard = pom.getDashboardPage();
+        const orders = pom.getOrdersPage();
+        
+        await login.goto();
+        await login.login(data.email, data.password);
+
+        await dashboard.goToMyOrders();
+
+        await orders.deleteAllOrders();
     });
 }

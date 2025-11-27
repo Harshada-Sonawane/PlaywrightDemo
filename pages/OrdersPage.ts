@@ -2,7 +2,7 @@
 import { Locator, Page } from "@playwright/test";
 
 export class OrdersPage {
-    private rows:Locator;
+    private rows: Locator;
 
     constructor(private page: Page) {
         this.rows = this.page.locator("tbody tr");
@@ -19,6 +19,14 @@ export class OrdersPage {
                 await this.rows.nth(i).locator("button").first().click();
                 break;
             }
+        }
+    }
+
+    async deleteAllOrders() {
+        await this.page.locator("tbody").waitFor();
+        const rowCount = await this.rows.count();
+        for (let i = 0; i < rowCount; i++) {
+            await this.rows.nth(i).locator("button").last().click();
         }
     }
 }
