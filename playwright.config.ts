@@ -5,7 +5,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 1,
-  reporter: 'html',
+  reporter: 'allure-playwright',
   timeout: 40000,
   
   use: {
